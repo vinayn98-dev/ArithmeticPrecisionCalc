@@ -34,7 +34,7 @@ int validate_cla(char argc, char **argv)
     return SUCCESS;
 }
 
-void convert_char_to_int(char argc,char **argv)
+void convert_cla_to_list(char argc,char **argv)
 {
     int digit;
 

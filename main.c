@@ -16,7 +16,7 @@ int main(char argc,char **argv)
     }
 
     //store each char as digit in double linked list
-    convert_char_to_int(argc,argv);
+    convert_cla_to_list(argc,argv);
 
     
     return 0;
