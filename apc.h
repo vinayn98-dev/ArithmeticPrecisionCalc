@@ -1,8 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define FAILURE -1
 #define SUCCESS  0
+
+#define OPERAND2_GREATER               -1
+#define OPERAND1_GREATER                1
+#define OPERANDS_EQUAL_IN_VALUE         0
+
 
 typedef struct dnode
 {
@@ -26,3 +32,5 @@ int addition(Dlist_t **head1,Dlist_t **tail1,Dlist_t **head2,Dlist_t **tail2,Sli
 int sll_insert_first(Slist_t **head, int data);
 int addition(Dlist_t **head1,Dlist_t **tail1,Dlist_t **head2,Dlist_t **tail2,Slist_t **head);
 void sll_print_list(Slist_t **head);
+int subtraction(Dlist_t **head1,Dlist_t **tail1,Dlist_t **head2,Dlist_t **tail2,Slist_t **head);
+void compare_operand(int argc,char **argv);

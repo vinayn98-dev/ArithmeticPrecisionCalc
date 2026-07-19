@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include "apc.h"
 
+int greater_operand = 0;
+
 int validate_cla(char argc, char **argv)
 {
     //excluding the a.out the inputs should 3 i.e., num1 operator num2
@@ -49,97 +51,6 @@ void convert_cla_to_list(Dlist_t **head1, Dlist_t **tail1,Dlist_t **head2, Dlist
         digit = argv[3][j] - '0';
         insert_last(head2,tail2,digit);
     }
-}
-
-int insert_last(Dlist_t **head,Dlist_t **tail, int data)
-{
-    Dlist_t *newnode = malloc(sizeof(Dlist_t));
-    if(newnode == NULL)
-    {
-        return FAILURE;
-    }
-    newnode->data = data;
-    newnode->next = NULL;
-    newnode->prev = NULL;
-
-    if(*head == NULL)
-    {
-        *head = newnode;
-        *tail = newnode;
-    }
-    else
-    {
-        (*tail)->next = newnode;
-        newnode->prev = *tail;
-        *tail = newnode;
-    }
-
-    return SUCCESS;
-}
-
-void print_list(Dlist_t **head)
-{
-	/* Cheking the list is empty or not */
-	if (head == NULL)
-	{
-		printf("INFO : List is empty\n");
-	}
-	else
-	{
-	    //printf("Operand : ");
-	    while (*head)		
-	    {
-		    /* Printing the list */
-		    printf("%d", (*head) -> data);
-
-		    /* Travering in forward direction */
-		    *head = (*head) -> next;
-		    //if (head)
-		      //  printf("> ");
-	    }
-    	printf("\n");
-    }
-}
-
-void sll_print_list(Slist_t **head)
-{
-	if (head == NULL)
-	{
-		printf("INFO : List is empty\n");
-	}
-    else
-    {
-        //printf("Result :");
-	    while (*head)		
-	    {
-		    printf("%d", (*head) -> data);
-		    *head = (*head) -> link;
-	    }
-
-	    //printf("NULL\n");
-    }
-}
-
-int sll_insert_first(Slist_t **head, int data)
-{
-    Slist_t *newnode = malloc(sizeof(Slist_t));
-    if(newnode == NULL)
-    {
-        return FAILURE;
-    }
-    newnode->data = data;
-    newnode->link = NULL;
-
-    if(*head == NULL)
-    {
-        *head = newnode;
-    }
-    else
-    {
-        newnode->link = *head;
-        *head = newnode;
-    }
-    return SUCCESS;
 }
 
 int addition(Dlist_t **head1,Dlist_t **tail1,Dlist_t **head2,Dlist_t **tail2,Slist_t **head)
@@ -202,4 +113,122 @@ int addition(Dlist_t **head1,Dlist_t **tail1,Dlist_t **head2,Dlist_t **tail2,Sli
             
     }
 
+}
+
+int subtraction(Dlist_t **head1,Dlist_t **tail1,Dlist_t **head2,Dlist_t **tail2,Slist_t **head)
+{
+    printf("Operand_1 : ");
+    print_list(head1);
+    printf("-\n");
+    printf("Operand_2 : ");
+    print_list(head2);
+    printf("Result : ");
+
+    Dlist_t *temp1 = *tail1;
+    Dlist_t *temp2 = *tail2;
+
+    int digit_sub = 0;
+
+    while( (temp1!=NULL || temp2!=NULL) )
+    {
+        if(greater_operand == OPERAND1_GREATER)
+        {
+            if(temp1->data < temp2->data)
+            {
+                temp1->data = temp1->data + 10;
+                digit_sub = (temp1->data - temp2->data) % 10;
+                sll_insert_first(head,digit_sub);
+                temp1->prev->data = (temp1->prev->data - 1);
+            }
+            else
+            {
+                digit_sub = (temp1->data - temp2->data) % 10;
+                sll_insert_first(head,digit_sub);
+            }
+            
+        }
+        else if(greater_operand == OPERAND2_GREATER)
+        {
+            if(temp2->data < temp1->data)
+            {
+                temp2->data = temp2->data + 10;
+                digit_sub = (temp2->data - temp1->data) % 10;
+                sll_insert_first(head,digit_sub);
+                temp2->prev->data = (temp2->prev->data - 1);
+            }
+            digit_sub = (temp2->data - temp1->data) % 10;
+            sll_insert_first(head,digit_sub);
+        }
+        else if(greater_operand ==  OPERANDS_EQUAL_IN_VALUE)
+        {
+            digit_sub = 0;
+            sll_insert_first(head,digit_sub);
+        }
+        else
+        {
+            //do nothing
+        }
+
+        if(temp1->prev != NULL && temp2->prev!=NULL)
+        {
+            temp1 = temp1->prev;
+            temp2 = temp2->prev;
+        }
+        else if(temp1->prev != NULL && temp2->prev == NULL)
+        {
+            temp1 = temp1->prev;
+            temp2->data = 0;
+        }
+        else if(temp2->prev != NULL && temp1->prev == NULL)
+        {
+            temp2 = temp2->prev;
+            temp1->data = 0;
+        }
+        else
+        {
+            //do  nothing
+            temp1 = NULL;
+            temp2 = NULL;
+        }
+            
+    }
+
+}
+
+void compare_operand(int argc,char **argv)
+{
+    
+    if(strlen(argv[1]) > strlen(argv[3]))
+    {
+        greater_operand = OPERAND1_GREATER;
+        return;
+    }
+    else if(strlen(argv[1]) < strlen(argv[3]))
+    {
+        greater_operand = OPERAND2_GREATER;
+        return;
+    }
+    else
+    {
+        //compare each digit till '\0'
+        int j=0;
+        while(argv[1][j] != '\0' && argv[3][j] != '\0')
+        {
+            if( (argv[1][j] - '0') > (argv[3][j] - '0'))
+            {
+                greater_operand = OPERAND1_GREATER;
+                return;
+            }
+            else if((argv[1][j] - '0') < (argv[3][j] - '0'))
+            {
+                greater_operand = OPERAND2_GREATER;
+                return;
+            }
+            else
+            {
+                j++;
+            }
+        }
+    }
+    greater_operand = OPERANDS_EQUAL_IN_VALUE;
 }

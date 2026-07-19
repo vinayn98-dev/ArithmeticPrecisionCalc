@@ -32,15 +32,18 @@ int main(int argc,char **argv)
             addition(&head1,&tail1,&head2,&tail2,&head);
             sll_print_list(&head);
             break;
-        /*
-            case '-':
-            subtraction(head1,tail1,head2,tail2,head);
+
+        case '-':
+            compare_operand(argc, argv);
+            subtraction(&head1,&tail1,&head2,&tail2,&head);
+            sll_print_list(&head);
             break;
+        /*    
         case '/':
-            division(head1,tail1,head2,tail2,head);
+            division(&head1,&tail1,&head2,&tail2,&head);
             break;
         case '*':
-            multiplication(head1,tail1,head2,tail2,head);
+            multiplication(&head1,&tail1,&head2,&tail2,&head);
             break;
         */ 
        default :
