@@ -72,14 +72,7 @@ int main(int argc,char **argv)
     }
 
     char *clean_argv[5] = { argv[0], clean1, argv[2], clean2, NULL };
-
-    printf("DEBUG argc=%d\n", argc);
-    printf("DEBUG clean_argv[0]=%s\n", clean_argv[0]);
-    printf("DEBUG clean_argv[1]=%s\n", clean_argv[1]);
-    printf("DEBUG clean_argv[2]=%s\n", clean_argv[2]);
-    printf("DEBUG clean_argv[3]=%s\n", clean_argv[3]);
-    printf("DEBUG clean_argv[4]=%s\n", clean_argv[4] == NULL ? "NULL" : "NOT NULL");
-
+    
     if(validate_cla(argc,clean_argv) == FAILURE)
     {
         printf("Incorrect inputs\n");
