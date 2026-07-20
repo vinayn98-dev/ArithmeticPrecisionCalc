@@ -6,14 +6,8 @@
 
 int greater_operand = 0;
 
-int validate_cla(char argc, char **argv)
+int validate_cla(int argc, char **argv)
 {
-    //excluding the a.out the inputs should 3 i.e., num1 operator num2
-    if(argc!=4)
-    {
-        return FAILURE;
-    }
-
     //check each character of first and second operand (num1, num2) are  digits or not
     
     for(int i=1; argv[i]!=NULL; i++)
@@ -238,16 +232,16 @@ void compare_operand(int argc,char **argv)
 
 int multiplication(Dlist_t **head1,Dlist_t **tail1,Dlist_t **head2,Dlist_t **tail2,Slist_t **head)
 {
+    int len1, len2;
+    int *a = (int *) list_to_array(*head1, &len1);
+    int *b = (int *) list_to_array(*head2, &len2);
+
     printf("Operand_1 : ");
     print_list(head1);
     printf("*\n");
     printf("Operand_2 : ");
     print_list(head2);
     printf("Result : ");
-
-    int len1, len2;
-    int *a = list_to_array(*head1, &len1);
-    int *b = list_to_array(*head2, &len2);
 
     int result_len = len1 + len2;
     int *result = calloc(result_len, sizeof(int));
@@ -277,16 +271,16 @@ int multiplication(Dlist_t **head1,Dlist_t **tail1,Dlist_t **head2,Dlist_t **tai
 
 int division(Dlist_t **head1,Dlist_t **tail1,Dlist_t **head2,Dlist_t **tail2,Slist_t **head)
 {
+    int len1, len2;
+    int *dividend = list_to_array(*head1, &len1);
+    int *divisor  = list_to_array(*head2, &len2);
+
     printf("Operand_1 : ");
     print_list(head1);
     printf("/\n");
     printf("Operand_2 : ");
     print_list(head2);
     printf("Result : ");
-
-    int len1, len2;
-    int *dividend = list_to_array(*head1, &len1);
-    int *divisor  = list_to_array(*head2, &len2);
 
     int is_zero = 1;
     for(int i=0;i<len2;i++) if(divisor[i]!=0) { is_zero=0; break; }
@@ -342,7 +336,7 @@ int division(Dlist_t **head1,Dlist_t **tail1,Dlist_t **head2,Dlist_t **tail2,Sli
     return SUCCESS;
 }
     
-static int *list_to_array(Dlist_t *head, int *len)
+int *list_to_array(Dlist_t *head, int *len)
 {
     int n = 0;
     Dlist_t *p = head;
@@ -359,27 +353,47 @@ static int *list_to_array(Dlist_t *head, int *len)
     return arr;
 }
 
-static int arr_compare(int *a, int la, int *b, int lb)
+int arr_compare(int *a, int la, int *b, int lb)
 {
     int sa=0, sb=0;
-    while(sa < la-1 && a[sa]==0) sa++;
-    while(sb < lb-1 && b[sb]==0) sb++;
+    while(sa < la-1 && a[sa]==0)
+    {
+        sa++;
+    }    
+    while(sb < lb-1 && b[sb]==0) 
+    {
+        sb++;
+    }
     int na = la-sa, nb = lb-sb;
-    if(na != nb) return na > nb ? 1 : -1;
+    if(na != nb)
+    {
+        return na > nb ? 1 : -1;
+    } 
+        
     for(int i=0;i<na;i++)
     {
-        if(a[sa+i] != b[sb+i]) return a[sa+i] > b[sb+i] ? 1 : -1;
+        if(a[sa+i] != b[sb+i]) 
+        {
+            return a[sa+i] > b[sb+i] ? 1 : -1;
+        }
     }
     return 0;
 }
 
-static void arr_subtract(int *a, int *b, int len)
+void arr_subtract(int *a, int *b, int len)
 {
     int borrow = 0;
     for(int i = len-1; i >= 0; i--)
     {
         int d = a[i]-b[i]-borrow;
-        if(d < 0) { d += 10; borrow = 1; } else borrow = 0;
+        if(d < 0) 
+        { 
+            d += 10; borrow = 1; 
+        } 
+        else 
+        {
+            borrow = 0;
+        }
         a[i] = d;
     }
 }

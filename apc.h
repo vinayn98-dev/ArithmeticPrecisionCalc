@@ -34,7 +34,7 @@ typedef struct snode
     struct snode *link;
 }Slist_t;
 
-int validate_cla(char argc, char **argv);
+int validate_cla(int argc, char **argv);
 void convert_cla_to_list(Dlist_t **head1, Dlist_t **tail1,Dlist_t **head2, Dlist_t **tail2,int argc, char **argv);
 int insert_last(Dlist_t **head,Dlist_t **tail, int data);
 void print_list(Dlist_t **head);
@@ -47,3 +47,8 @@ void compare_operand(int argc,char **argv);
 
 int multiplication(Dlist_t **head1,Dlist_t **tail1,Dlist_t **head2,Dlist_t **tail2,Slist_t **head);
 int division(Dlist_t **head1,Dlist_t **tail1,Dlist_t **head2,Dlist_t **tail2,Slist_t **head);
+
+
+int *list_to_array(Dlist_t *head, int *len);
+int arr_compare(int *a, int la, int *b, int lb);
+void arr_subtract(int *a, int *b, int len);
