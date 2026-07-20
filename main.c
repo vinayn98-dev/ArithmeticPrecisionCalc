@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "apc.h"
 
-int _CRT_glob = 0;
+int _CRT_glob = 0;  //used to avoid to treat * as wild card 
 
 int sign1 = 1;
 int sign2 = 1;
@@ -72,7 +72,7 @@ int main(int argc,char **argv)
     }
 
     char *clean_argv[5] = { argv[0], clean1, argv[2], clean2, NULL };
-    
+
     if(validate_cla(argc,clean_argv) == FAILURE)
     {
         printf("Incorrect inputs\n");
