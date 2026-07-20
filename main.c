@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "apc.h"
 
+
 int main(int argc,char **argv)
 {
     Dlist_t *head1 = NULL;
@@ -38,12 +39,14 @@ int main(int argc,char **argv)
             subtraction(&head1,&tail1,&head2,&tail2,&head);
             sll_print_list(&head);
             break;
+
+        case '*':
+            multiplication(&head1,&tail1,&head2,&tail2,&head);
+            sll_print_list(&head);
+            break;    
         /*    
         case '/':
             division(&head1,&tail1,&head2,&tail2,&head);
-            break;
-        case '*':
-            multiplication(&head1,&tail1,&head2,&tail2,&head);
             break;
         */ 
        default :

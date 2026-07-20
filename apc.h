@@ -9,6 +9,16 @@
 #define OPERAND1_GREATER                1
 #define OPERANDS_EQUAL_IN_VALUE         0
 
+#define MAX_DIGITS  1000
+
+
+
+extern int greater_operand;
+extern int sign1;
+extern int sign2;
+
+
+
 
 typedef struct dnode
 {
@@ -34,3 +44,6 @@ int addition(Dlist_t **head1,Dlist_t **tail1,Dlist_t **head2,Dlist_t **tail2,Sli
 void sll_print_list(Slist_t **head);
 int subtraction(Dlist_t **head1,Dlist_t **tail1,Dlist_t **head2,Dlist_t **tail2,Slist_t **head);
 void compare_operand(int argc,char **argv);
+
+int multiplication(Dlist_t **head1,Dlist_t **tail1,Dlist_t **head2,Dlist_t **tail2,Slist_t **head);
+int division(Dlist_t **head1,Dlist_t **tail1,Dlist_t **head2,Dlist_t **tail2,Slist_t **head);
